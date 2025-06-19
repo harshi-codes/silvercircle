@@ -145,8 +145,8 @@ export default function HomePage() {
       location: "Delhi, India",
       bio: "Retired government officer who loves classical music, chess, and morning walks. Looking for meaningful conversations and shared experiences.",
       interests: ["Classical Music", "Chess", "Reading", "Gardening", "History"],
-      avatar: "/profiles/rajesh-kumar.png",
-      photos: ["/profiles/rajesh-kumar.png", "/placeholder.svg?height=400&width=300"],
+      avatar: "/placeholder.svg?height=400&width=300",
+      photos: ["/placeholder.svg?height=400&width=300", "/placeholder.svg?height=400&width=300"],
     },
     {
       id: "2",
@@ -155,8 +155,8 @@ export default function HomePage() {
       location: "Mumbai, India",
       bio: "Former engineer with a passion for photography and travel. Enjoys cooking traditional food and sharing stories from around India.",
       interests: ["Photography", "Travel", "Cooking", "Technology", "Art"],
-      avatar: "/profiles/suresh-patel.png",
-      photos: ["/profiles/suresh-patel.png", "/placeholder.svg?height=400&width=300"],
+      avatar: "/placeholder.svg?height=400&width=300",
+      photos: ["/placeholder.svg?height=400&width=300", "/placeholder.svg?height=400&width=300"],
     },
     {
       id: "3",
@@ -165,8 +165,8 @@ export default function HomePage() {
       location: "Jaipur, India",
       bio: "Retired music teacher who still plays tabla. Love classical Indian music, good books, and meeting people who appreciate culture.",
       interests: ["Music", "Tabla", "Classical Arts", "Books", "Spirituality"],
-      avatar: "/profiles/mohan-singh.png",
-      photos: ["/profiles/mohan-singh.png", "/placeholder.svg?height=400&width=300"],
+      avatar: "/placeholder.svg?height=400&width=300",
+      photos: ["/placeholder.svg?height=400&width=300", "/placeholder.svg?height=400&width=300"],
     },
   ]
 
@@ -178,8 +178,8 @@ export default function HomePage() {
       location: "Bangalore, India",
       bio: "Former teacher with a love for literature and classical dance. Enjoys painting, temple visits, and exploring cultural events.",
       interests: ["Literature", "Classical Dance", "Painting", "Spirituality", "Culture"],
-      avatar: "/profiles/sunita-sharma.png",
-      photos: ["/profiles/sunita-sharma.png", "/placeholder.svg?height=400&width=300"],
+      avatar: "/placeholder.svg?height=400&width=300",
+      photos: ["/placeholder.svg?height=400&width=300", "/placeholder.svg?height=400&width=300"],
     },
     {
       id: "5",
@@ -188,8 +188,8 @@ export default function HomePage() {
       location: "Chennai, India",
       bio: "Retired nurse who loves cooking traditional South Indian food, yoga, and spending time in nature. Looking for someone to share life's beautiful moments.",
       interests: ["Cooking", "Yoga", "Nature", "Traditional Arts", "Volunteering"],
-      avatar: "/profiles/kamala-devi.png",
-      photos: ["/profiles/kamala-devi.png", "/placeholder.svg?height=400&width=300"],
+      avatar: "/placeholder.svg?height=400&width=300",
+      photos: ["/placeholder.svg?height=400&width=300", "/placeholder.svg?height=400&width=300"],
     },
     {
       id: "6",
@@ -198,8 +198,8 @@ export default function HomePage() {
       location: "Kolkata, India",
       bio: "Former professor with a passion for gardening and handicrafts. Enjoys quiet evenings, good conversation, and creating beautiful rangoli.",
       interests: ["Gardening", "Handicrafts", "Reading", "Rangoli", "Classical Music"],
-      avatar: "/profiles/meera-gupta.png",
-      photos: ["/profiles/meera-gupta.png", "/placeholder.svg?height=400&width=300"],
+      avatar: "/placeholder.svg?height=400&width=300",
+      photos: ["/placeholder.svg?height=400&width=300", "/placeholder.svg?height=400&width=300"],
     },
   ]
 
@@ -246,14 +246,14 @@ export default function HomePage() {
       <main className="container mx-auto px-4 py-8">
         {/* Hero Section with Background Logo */}
         <section className="relative text-center py-16 md:py-24 overflow-hidden">
-          {/* Background SilverCircle Logo - Zoomed In */}
+          {/* Background SilverCircle Logo */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <Image
               src="/logo.png"
               alt="SilverCircle Background"
-              width={800}
-              height={800}
-              className="opacity-15 dark:opacity-8 scale-150"
+              width={400}
+              height={400}
+              className="opacity-10 dark:opacity-5"
             />
           </div>
 
