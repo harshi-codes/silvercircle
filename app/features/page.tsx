@@ -79,48 +79,56 @@ export default function FeaturesPage() {
       title: t.nostalgiaRooms,
       description: t.nostalgiaDesc,
       color: "text-purple-600",
+      href: "/circles",
     },
     {
       icon: Heart,
       title: t.hobbyCircles,
       description: t.hobbyDesc,
       color: "text-orange-500",
+      href: "/circles",
     },
     {
       icon: Globe,
       title: t.vrMemories,
       description: t.vrDesc,
       color: "text-blue-600",
+      href: "/vr-memories",
     },
     {
       icon: Users,
       title: t.companions,
       description: t.companionsDesc,
       color: "text-green-600",
+      href: "/companions",
     },
     {
       icon: Camera,
       title: t.videoChat,
       description: t.videoChatDesc,
       color: "text-red-500",
+      href: "/features/video-call",
     },
     {
       icon: Shield,
       title: t.safeSpace,
       description: t.safeSpaceDesc,
       color: "text-indigo-600",
+      href: "/about",
     },
     {
       icon: MessageCircle,
       title: t.memories,
       description: t.memoriesDesc,
       color: "text-pink-600",
+      href: "/vr-memories",
     },
     {
       icon: Headphones,
       title: t.support,
       description: t.supportDesc,
       color: "text-teal-600",
+      href: "/about",
     },
   ]
 
@@ -150,16 +158,15 @@ export default function FeaturesPage() {
         <section className="py-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <Card
-                key={index}
-                className="bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-2xl border-0"
-              >
-                <CardContent className="p-8 text-center">
-                  <feature.icon className={`w-16 h-16 ${feature.color} mx-auto mb-6`} />
-                  <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">{feature.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{feature.description}</p>
-                </CardContent>
-              </Card>
+              <Link key={index} href={feature.href}>
+                <Card className="bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-2xl border-0 cursor-pointer">
+                  <CardContent className="p-8 text-center">
+                    <feature.icon className={`w-16 h-16 ${feature.color} mx-auto mb-6`} />
+                    <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">{feature.title}</h3>
+                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{feature.description}</p>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         </section>

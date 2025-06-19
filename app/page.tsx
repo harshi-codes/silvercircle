@@ -3,18 +3,33 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Heart, Users, Globe } from "lucide-react"
+import { Heart, Users, Eye, Gamepad2, UserCheck, ChevronLeft, ChevronRight, X, HandHeart } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { Header } from "@/components/header"
 import { RatingModal } from "@/components/rating-modal"
 import { VoiceNavigation } from "@/components/voice-navigation"
 
+interface Profile {
+  id: string
+  name: string
+  age: number
+  location: string
+  bio: string
+  interests: string[]
+  avatar: string
+  photos: string[]
+}
+
 export default function HomePage() {
   const [darkMode, setDarkMode] = useState(false)
   const [language, setLanguage] = useState("en")
   const [showRatingModal, setShowRatingModal] = useState(false)
   const [voiceEnabled, setVoiceEnabled] = useState(false)
+  const [activeTab, setActiveTab] = useState<"gentleman" | "lady">("gentleman")
+  const [currentProfileIndex, setCurrentProfileIndex] = useState(0)
+  const [swipeDirection, setSwipeDirection] = useState<"left" | "right" | null>(null)
+  const [isAnimating, setIsAnimating] = useState(false)
 
   useEffect(() => {
     // Show rating modal after 30 seconds
@@ -32,6 +47,29 @@ export default function HomePage() {
       document.documentElement.classList.remove("dark")
     }
   }, [darkMode])
+
+  const playSwipeSound = (direction: "left" | "right") => {
+    // Create audio context for swipe sound
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
+    const oscillator = audioContext.createOscillator()
+    const gainNode = audioContext.createGain()
+
+    oscillator.connect(gainNode)
+    gainNode.connect(audioContext.destination)
+
+    // Different frequencies for different swipe directions
+    oscillator.frequency.setValueAtTime(direction === "right" ? 800 : 400, audioContext.currentTime)
+    oscillator.frequency.exponentialRampToValueAtTime(
+      direction === "right" ? 1200 : 200,
+      audioContext.currentTime + 0.3,
+    )
+
+    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime)
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3)
+
+    oscillator.start(audioContext.currentTime)
+    oscillator.stop(audioContext.currentTime + 0.3)
+  }
 
   const translations = {
     en: {
@@ -51,6 +89,19 @@ export default function HomePage() {
       vrDesc: "Experience nostalgic moments through virtual reality",
       companions: "Go Companions Connect",
       companionsDesc: "Find trusted companions for activities and adventures",
+      goodCompanion: "Good Companion Helper",
+      goodCompanionDesc: "Connect with nearby seniors for mutual help and support",
+      brainGames: "Brain Games & Puzzles",
+      brainGamesDesc: "Exercise your mind and earn coins for premium features",
+      safeConnections: "Safe & Verified Connections",
+      safeConnectionsDesc: "All members are verified for your peace of mind",
+      meetPeople: "Meet Amazing People",
+      gentleman: "Distinguished Gentlemen",
+      lady: "Elegant Ladies",
+      swipeToConnect: "Swipe to connect with wonderful people",
+      interested: "Interested",
+      pass: "Pass",
+      sendMessage: "Send Message",
     },
     hi: {
       headline: "जहाँ चाँदी आत्मा से मिलती है, वहाँ रिश्ते जीवंत हो जाते हैं।",
@@ -68,10 +119,114 @@ export default function HomePage() {
       vrDesc: "वर्चुअल रियलिटी के माध्यम से यादों का अनुभव करें",
       companions: "साथी कनेक्ट",
       companionsDesc: "गतिविधियों के लिए विश्वसनीय साथी खोजें",
+      goodCompanion: "अच्छे साथी सहायक",
+      goodCompanionDesc: "पारस्परिक सहायता के लिए आस-पास के वरिष्ठ नागरिकों से जुड़ें",
+      brainGames: "दिमागी खेल और पहेलियां",
+      brainGamesDesc: "अपने दिमाग का व्यायाम करें और प्रीमियम सुविधाओं के लिए सिक्के कमाएं",
+      safeConnections: "सुरक्षित और सत्यापित कनेक्शन",
+      safeConnectionsDesc: "आपकी मानसिक शांति के लिए सभी सदस्य सत्यापित हैं",
+      meetPeople: "अद्भुत लोगों से मिलें",
+      gentleman: "प्रतिष्ठित सज्जन",
+      lady: "सुरुचिपूर्ण महिलाएं",
+      swipeToConnect: "अद्भुत लोगों से जुड़ने के लिए स्वाइप करें",
+      interested: "रुचि है",
+      pass: "छोड़ें",
+      sendMessage: "संदेश भेजें",
     },
   }
 
   const t = translations[language as keyof typeof translations]
+
+  const gentlemenProfiles: Profile[] = [
+    {
+      id: "1",
+      name: "Rajesh Kumar",
+      age: 72,
+      location: "Delhi, India",
+      bio: "Retired government officer who loves classical music, chess, and morning walks. Looking for meaningful conversations and shared experiences.",
+      interests: ["Classical Music", "Chess", "Reading", "Gardening", "History"],
+      avatar: "/profiles/rajesh-kumar.png",
+      photos: ["/profiles/rajesh-kumar.png", "/placeholder.svg?height=400&width=300"],
+    },
+    {
+      id: "2",
+      name: "Suresh Patel",
+      age: 68,
+      location: "Mumbai, India",
+      bio: "Former engineer with a passion for photography and travel. Enjoys cooking traditional food and sharing stories from around India.",
+      interests: ["Photography", "Travel", "Cooking", "Technology", "Art"],
+      avatar: "/profiles/suresh-patel.png",
+      photos: ["/profiles/suresh-patel.png", "/placeholder.svg?height=400&width=300"],
+    },
+    {
+      id: "3",
+      name: "Mohan Singh",
+      age: 75,
+      location: "Jaipur, India",
+      bio: "Retired music teacher who still plays tabla. Love classical Indian music, good books, and meeting people who appreciate culture.",
+      interests: ["Music", "Tabla", "Classical Arts", "Books", "Spirituality"],
+      avatar: "/profiles/mohan-singh.png",
+      photos: ["/profiles/mohan-singh.png", "/placeholder.svg?height=400&width=300"],
+    },
+  ]
+
+  const ladiesProfiles: Profile[] = [
+    {
+      id: "4",
+      name: "Sunita Sharma",
+      age: 69,
+      location: "Bangalore, India",
+      bio: "Former teacher with a love for literature and classical dance. Enjoys painting, temple visits, and exploring cultural events.",
+      interests: ["Literature", "Classical Dance", "Painting", "Spirituality", "Culture"],
+      avatar: "/profiles/sunita-sharma.png",
+      photos: ["/profiles/sunita-sharma.png", "/placeholder.svg?height=400&width=300"],
+    },
+    {
+      id: "5",
+      name: "Kamala Devi",
+      age: 66,
+      location: "Chennai, India",
+      bio: "Retired nurse who loves cooking traditional South Indian food, yoga, and spending time in nature. Looking for someone to share life's beautiful moments.",
+      interests: ["Cooking", "Yoga", "Nature", "Traditional Arts", "Volunteering"],
+      avatar: "/profiles/kamala-devi.png",
+      photos: ["/profiles/kamala-devi.png", "/placeholder.svg?height=400&width=300"],
+    },
+    {
+      id: "6",
+      name: "Meera Gupta",
+      age: 71,
+      location: "Kolkata, India",
+      bio: "Former professor with a passion for gardening and handicrafts. Enjoys quiet evenings, good conversation, and creating beautiful rangoli.",
+      interests: ["Gardening", "Handicrafts", "Reading", "Rangoli", "Classical Music"],
+      avatar: "/profiles/meera-gupta.png",
+      photos: ["/profiles/meera-gupta.png", "/placeholder.svg?height=400&width=300"],
+    },
+  ]
+
+  const currentProfiles = activeTab === "gentleman" ? gentlemenProfiles : ladiesProfiles
+  const currentProfile = currentProfiles[currentProfileIndex]
+
+  const nextProfile = () => {
+    setCurrentProfileIndex((prev) => (prev + 1) % currentProfiles.length)
+  }
+
+  const previousProfile = () => {
+    setCurrentProfileIndex((prev) => (prev - 1 + currentProfiles.length) % currentProfiles.length)
+  }
+
+  const handleSwipe = (direction: "left" | "right") => {
+    if (isAnimating) return
+
+    setIsAnimating(true)
+    setSwipeDirection(direction)
+    playSwipeSound(direction)
+
+    setTimeout(() => {
+      nextProfile()
+      setSwipeDirection(null)
+      setIsAnimating(false)
+    }, 300)
+  }
 
   return (
     <div
@@ -89,18 +244,29 @@ export default function HomePage() {
       <VoiceNavigation enabled={voiceEnabled} language={language} />
 
       <main className="container mx-auto px-4 py-8">
-        {/* Hero Section */}
-        <section className="text-center py-16 md:py-24">
-          <div className="max-w-4xl mx-auto">
+        {/* Hero Section with Background Logo */}
+        <section className="relative text-center py-16 md:py-24 overflow-hidden">
+          {/* Background SilverCircle Logo - Zoomed In */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <Image
               src="/logo.png"
-              alt="SilverCircle Logo"
-              width={120}
-              height={120}
-              className="mx-auto mb-8 rounded-full shadow-lg"
+              alt="SilverCircle Background"
+              width={800}
+              height={800}
+              className="opacity-15 dark:opacity-8 scale-150"
             />
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-gray-800 dark:text-white leading-tight">
-              {t.headline}
+          </div>
+
+          {/* Main Content */}
+          <div className="relative z-10 max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+              <span className="bg-gradient-to-r from-purple-600 via-purple-700 to-orange-600 bg-clip-text text-transparent font-extrabold">
+                Where silver meets soul,
+              </span>
+              <br />
+              <span className="bg-gradient-to-r from-orange-500 via-purple-600 to-purple-700 bg-clip-text text-transparent font-extrabold">
+                connection comes alive.
+              </span>
             </h1>
             <p className="text-xl md:text-2xl mb-12 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
               {t.subtitle}
@@ -108,7 +274,7 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Button
                 size="lg"
-                className="text-lg px-8 py-4 bg-purple-600 hover:bg-purple-700 text-white rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
+                className="text-lg px-8 py-4 bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
                 asChild
               >
                 <Link href="/profile">{t.joinCommunity}</Link>
@@ -125,52 +291,217 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Meet People Section */}
+        <section className="py-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">
+            {t.meetPeople}
+          </h2>
+
+          {/* Profile Tabs */}
+          <div className="flex justify-center mb-8">
+            <div className="bg-white dark:bg-gray-800 rounded-full p-2 shadow-lg">
+              <Button
+                onClick={() => {
+                  setActiveTab("gentleman")
+                  setCurrentProfileIndex(0)
+                }}
+                className={`px-8 py-3 rounded-full text-lg font-medium transition-all duration-200 ${
+                  activeTab === "gentleman"
+                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
+                    : "bg-transparent text-gray-600 hover:bg-gray-100"
+                }`}
+              >
+                👨‍🦳 {t.gentleman}
+              </Button>
+              <Button
+                onClick={() => {
+                  setActiveTab("lady")
+                  setCurrentProfileIndex(0)
+                }}
+                className={`px-8 py-3 rounded-full text-lg font-medium transition-all duration-200 ${
+                  activeTab === "lady"
+                    ? "bg-gradient-to-r from-pink-600 to-orange-600 text-white shadow-lg"
+                    : "bg-transparent text-gray-600 hover:bg-gray-100"
+                }`}
+              >
+                👩‍🦳 {t.lady}
+              </Button>
+            </div>
+          </div>
+
+          {/* Profile Card */}
+          <div className="max-w-md mx-auto">
+            <Card
+              className={`bg-white dark:bg-gray-800 shadow-2xl rounded-3xl border-0 overflow-hidden transition-all duration-300 ${
+                swipeDirection === "right"
+                  ? "transform translate-x-full rotate-12 opacity-0"
+                  : swipeDirection === "left"
+                    ? "transform -translate-x-full -rotate-12 opacity-0"
+                    : "transform translate-x-0 rotate-0 opacity-100"
+              }`}
+            >
+              <div className="relative">
+                <img
+                  src={currentProfile.avatar || "/placeholder.svg"}
+                  alt={currentProfile.name}
+                  className="w-full h-96 object-cover"
+                />
+                <div className="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
+                  {currentProfileIndex + 1} / {currentProfiles.length}
+                </div>
+
+                {/* Navigation Arrows */}
+                <Button
+                  onClick={previousProfile}
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full bg-black bg-opacity-50 text-white hover:bg-opacity-70"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </Button>
+                <Button
+                  onClick={nextProfile}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full bg-black bg-opacity-50 text-white hover:bg-opacity-70"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </Button>
+              </div>
+
+              <CardContent className="p-8">
+                <div className="text-center mb-6">
+                  <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
+                    {currentProfile.name}, {currentProfile.age}
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">{currentProfile.location}</p>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">{currentProfile.bio}</p>
+
+                  {/* Interests */}
+                  <div className="flex flex-wrap justify-center gap-2 mb-6">
+                    {currentProfile.interests.map((interest) => (
+                      <span
+                        key={interest}
+                        className="px-3 py-1 bg-gradient-to-r from-purple-100 to-orange-100 text-purple-800 rounded-full text-sm"
+                      >
+                        {interest}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex space-x-4">
+                  <Button
+                    onClick={() => handleSwipe("left")}
+                    disabled={isAnimating}
+                    className="flex-1 py-3 bg-gray-500 hover:bg-gray-600 text-white rounded-xl disabled:opacity-50"
+                  >
+                    <X className="w-5 h-5 mr-2" />
+                    {t.pass}
+                  </Button>
+                  <Button
+                    onClick={() => handleSwipe("right")}
+                    disabled={isAnimating}
+                    className="flex-1 py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-xl disabled:opacity-50"
+                  >
+                    <Heart className="w-5 h-5 mr-2" />
+                    {t.interested}
+                  </Button>
+                </div>
+
+                <Button className="w-full mt-4 py-3 bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white rounded-xl">
+                  {t.sendMessage}
+                </Button>
+              </CardContent>
+            </Card>
+
+            <p className="text-center text-gray-600 dark:text-gray-300 mt-6 text-lg">{t.swipeToConnect}</p>
+          </div>
+        </section>
+
         {/* Mission Section */}
-        <section className="py-16 bg-white dark:bg-gray-800 rounded-3xl shadow-xl mb-16">
+        <section className="py-16 bg-gradient-to-r from-purple-100 to-orange-100 dark:from-purple-900/30 dark:to-orange-900/30 rounded-3xl shadow-xl mb-16">
           <div className="max-w-4xl mx-auto px-8 text-center">
             <Heart className="w-16 h-16 text-purple-600 mx-auto mb-6" />
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800 dark:text-white">{t.mission}</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">
+              {t.mission}
+            </h2>
             <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed">{t.missionText}</p>
           </div>
         </section>
 
         {/* Features Section */}
         <section className="py-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-800 dark:text-white">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">
             {t.features}
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-2xl border-0">
-              <CardContent className="p-8 text-center">
-                <Users className="w-12 h-12 text-purple-600 mx-auto mb-4" />
-                <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">{t.nostalgiaRooms}</h3>
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{t.nostalgiaDesc}</p>
-              </CardContent>
-            </Card>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <Link href="/circles">
+              <Card className="bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-2xl border-0 cursor-pointer group">
+                <CardContent className="p-8 text-center">
+                  <Users className="w-12 h-12 text-purple-600 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
+                  <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">{t.nostalgiaRooms}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{t.nostalgiaDesc}</p>
+                </CardContent>
+              </Card>
+            </Link>
 
-            <Card className="bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-2xl border-0">
-              <CardContent className="p-8 text-center">
-                <Heart className="w-12 h-12 text-orange-500 mx-auto mb-4" />
-                <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">{t.hobbyCircles}</h3>
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{t.hobbyDesc}</p>
-              </CardContent>
-            </Card>
+            <Link href="/circles">
+              <Card className="bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-2xl border-0 cursor-pointer group">
+                <CardContent className="p-8 text-center">
+                  <Heart className="w-12 h-12 text-orange-500 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
+                  <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">{t.hobbyCircles}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{t.hobbyDesc}</p>
+                </CardContent>
+              </Card>
+            </Link>
 
-            <Card className="bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-2xl border-0">
-              <CardContent className="p-8 text-center">
-                <Globe className="w-12 h-12 text-purple-600 mx-auto mb-4" />
-                <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">{t.vrMemories}</h3>
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{t.vrDesc}</p>
-              </CardContent>
-            </Card>
+            <Link href="/vr-memories">
+              <Card className="bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-2xl border-0 cursor-pointer group">
+                <CardContent className="p-8 text-center">
+                  <Eye className="w-12 h-12 text-blue-600 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
+                  <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">{t.vrMemories}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{t.vrDesc}</p>
+                </CardContent>
+              </Card>
+            </Link>
 
-            <Card className="bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-2xl border-0">
-              <CardContent className="p-8 text-center">
-                <Users className="w-12 h-12 text-orange-500 mx-auto mb-4" />
-                <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">{t.companions}</h3>
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{t.companionsDesc}</p>
-              </CardContent>
-            </Card>
+            <Link href="/companions">
+              <Card className="bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-2xl border-0 cursor-pointer group">
+                <CardContent className="p-8 text-center">
+                  <Users className="w-12 h-12 text-green-600 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
+                  <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">{t.companions}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{t.companionsDesc}</p>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/companions">
+              <Card className="bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-2xl border-0 cursor-pointer group">
+                <CardContent className="p-8 text-center">
+                  <HandHeart className="w-12 h-12 text-rose-600 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
+                  <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">{t.goodCompanion}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{t.goodCompanionDesc}</p>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/games">
+              <Card className="bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-2xl border-0 cursor-pointer group">
+                <CardContent className="p-8 text-center">
+                  <Gamepad2 className="w-12 h-12 text-indigo-600 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
+                  <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">{t.brainGames}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{t.brainGamesDesc}</p>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/about">
+              <Card className="bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-2xl border-0 cursor-pointer group">
+                <CardContent className="p-8 text-center">
+                  <UserCheck className="w-12 h-12 text-teal-600 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
+                  <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">{t.safeConnections}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{t.safeConnectionsDesc}</p>
+                </CardContent>
+              </Card>
+            </Link>
           </div>
         </section>
 

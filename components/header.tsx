@@ -23,12 +23,20 @@ export function Header({ darkMode, setDarkMode, language, setLanguage, voiceEnab
     en: [
       { href: "/", label: "Home" },
       { href: "/features", label: "Features" },
+      { href: "/circles", label: "Circles" },
+      { href: "/companions", label: "Companions" },
+      { href: "/vr-memories", label: "VR Memories" },
+      { href: "/games", label: "Games" },
       { href: "/about", label: "About" },
       { href: "/profile", label: "Join Us" },
     ],
     hi: [
       { href: "/", label: "होम" },
       { href: "/features", label: "विशेषताएं" },
+      { href: "/circles", label: "मंडल" },
+      { href: "/companions", label: "साथी" },
+      { href: "/vr-memories", label: "VR यादें" },
+      { href: "/games", label: "खेल" },
       { href: "/about", label: "हमारे बारे में" },
       { href: "/profile", label: "शामिल हों" },
     ],
@@ -47,12 +55,12 @@ export function Header({ darkMode, setDarkMode, language, setLanguage, voiceEnab
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-6">
             {currentNavItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-lg font-medium text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-200"
+                className="text-base font-medium text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-200"
               >
                 {item.label}
               </Link>
@@ -98,7 +106,7 @@ export function Header({ darkMode, setDarkMode, language, setLanguage, voiceEnab
             <Button
               variant="outline"
               size="sm"
-              className="md:hidden p-2"
+              className="lg:hidden p-2"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               <Menu className="w-5 h-5" />
@@ -108,7 +116,7 @@ export function Header({ darkMode, setDarkMode, language, setLanguage, voiceEnab
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <nav className="md:hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-700 pt-4">
+          <nav className="lg:hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-700 pt-4">
             <div className="flex flex-col space-y-3">
               {currentNavItems.map((item) => (
                 <Link
