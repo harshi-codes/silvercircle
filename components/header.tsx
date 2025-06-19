@@ -6,6 +6,7 @@ import { Moon, Sun, Mic, MicOff, Menu } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
+import "@fontsource/grand-hotel"
 
 interface HeaderProps {
   darkMode: boolean
@@ -27,6 +28,7 @@ export function Header({ darkMode, setDarkMode, language, setLanguage, voiceEnab
       { href: "/vr-memories", label: "VR Memories" },
       { href: "/games", label: "Games" },
       { href: "/about", label: "About" },
+      { href: "/my-profile", label: "My Profile" },
       { href: "/profile", label: "Join Us" },
     ],
     hi: [
@@ -36,6 +38,7 @@ export function Header({ darkMode, setDarkMode, language, setLanguage, voiceEnab
       { href: "/vr-memories", label: "VR यादें" },
       { href: "/games", label: "खेल" },
       { href: "/about", label: "हमारे बारे में" },
+      { href: "/my-profile", label: "मेरी प्रोफ़ाइल" },
       { href: "/profile", label: "शामिल हों" },
     ],
   }
@@ -48,8 +51,8 @@ export function Header({ darkMode, setDarkMode, language, setLanguage, voiceEnab
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3">
-            <Image src="/logo.png" alt="SilverCircle" width={50} height={50} className="rounded-full" />
-            <span className="text-2xl font-bold text-purple-600 dark:text-purple-400">SilverCircle</span>
+            <Image src="/logo.png" alt="SilverCircle" width={50} height={50} className="rounded-full opacity-90" />
+            <span className="text-3xl font-bold text-purple-600 dark:text-purple-400" style={{ fontFamily: '"Grand Hotel", cursive' }}>SilverCircle</span>
           </Link>
 
           {/* Desktop Navigation */}

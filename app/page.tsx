@@ -9,6 +9,10 @@ import Link from "next/link"
 import { Header } from "@/components/header"
 import { RatingModal } from "@/components/rating-modal"
 import { VoiceNavigation } from "@/components/voice-navigation"
+import React from "react"
+import "@fontsource/dm-serif-display";
+import "@fontsource/poppins/400.css";
+import { Typewriter } from 'react-simple-typewriter';
 
 interface Profile {
   id: string
@@ -74,7 +78,7 @@ export default function HomePage() {
   const translations = {
     en: {
       headline: "Where silver meets soul, connection comes alive.",
-      subtitle: "Join a warm community designed for seniors who value meaningful connections and shared experiences.",
+      subtitle: "",
       joinCommunity: "Join Our Community",
       learnMore: "Learn More",
       mission: "Our Mission",
@@ -92,8 +96,8 @@ export default function HomePage() {
       safeConnections: "Safe & Verified Connections",
       safeConnectionsDesc: "All members are verified for your peace of mind",
       meetPeople: "Meet Amazing People",
-      gentleman: "Distinguished Gentlemen",
-      lady: "Elegant Ladies",
+      gentleman: "Silvermen",
+      lady: "Silverwomen",
       swipeToConnect: "Swipe to connect with wonderful people",
       interested: "Interested",
       pass: "Pass",
@@ -137,8 +141,8 @@ export default function HomePage() {
       location: "Delhi, India",
       bio: "Retired government officer who loves classical music, chess, and morning walks. Looking for meaningful conversations and shared experiences.",
       interests: ["Classical Music", "Chess", "Reading", "Gardening", "History"],
-      avatar: "/placeholder.svg?height=400&width=300",
-      photos: ["/placeholder.svg?height=400&width=300", "/placeholder.svg?height=400&width=300"],
+      avatar: "/memories/men1.jpeg",
+      photos: ["/memories/men1.jpeg"],
     },
     {
       id: "2",
@@ -147,8 +151,8 @@ export default function HomePage() {
       location: "Mumbai, India",
       bio: "Former engineer with a passion for photography and travel. Enjoys cooking traditional food and sharing stories from around India.",
       interests: ["Photography", "Travel", "Cooking", "Technology", "Art"],
-      avatar: "/placeholder.svg?height=400&width=300",
-      photos: ["/placeholder.svg?height=400&width=300", "/placeholder.svg?height=400&width=300"],
+      avatar: "/memories/men2.jpeg",
+      photos: ["/memories/men2.jpeg"],
     },
     {
       id: "3",
@@ -157,8 +161,8 @@ export default function HomePage() {
       location: "Jaipur, India",
       bio: "Retired music teacher who still plays tabla. Love classical Indian music, good books, and meeting people who appreciate culture.",
       interests: ["Music", "Tabla", "Classical Arts", "Books", "Spirituality"],
-      avatar: "/placeholder.svg?height=400&width=300",
-      photos: ["/placeholder.svg?height=400&width=300", "/placeholder.svg?height=400&width=300"],
+      avatar: "/memories/men3.jpeg",
+      photos: ["/memories/men3.jpeg"],
     },
   ]
 
@@ -170,8 +174,8 @@ export default function HomePage() {
       location: "Bangalore, India",
       bio: "Former teacher with a love for literature and classical dance. Enjoys painting, temple visits, and exploring cultural events.",
       interests: ["Literature", "Classical Dance", "Painting", "Spirituality", "Culture"],
-      avatar: "/placeholder.svg?height=400&width=300",
-      photos: ["/placeholder.svg?height=400&width=300", "/placeholder.svg?height=400&width=300"],
+      avatar: "/memories/lady1.jpeg",
+      photos: ["/memories/lady1.jpeg"],
     },
     {
       id: "5",
@@ -180,8 +184,8 @@ export default function HomePage() {
       location: "Chennai, India",
       bio: "Retired nurse who loves cooking traditional South Indian food, yoga, and spending time in nature. Looking for someone to share life's beautiful moments.",
       interests: ["Cooking", "Yoga", "Nature", "Traditional Arts", "Volunteering"],
-      avatar: "/placeholder.svg?height=400&width=300",
-      photos: ["/placeholder.svg?height=400&width=300", "/placeholder.svg?height=400&width=300"],
+      avatar: "/memories/lady2.jpeg",
+      photos: ["/memories/lady2.jpeg"],
     },
     {
       id: "6",
@@ -190,8 +194,8 @@ export default function HomePage() {
       location: "Kolkata, India",
       bio: "Former professor with a passion for gardening and handicrafts. Enjoys quiet evenings, good conversation, and creating beautiful rangoli.",
       interests: ["Gardening", "Handicrafts", "Reading", "Rangoli", "Classical Music"],
-      avatar: "/placeholder.svg?height=400&width=300",
-      photos: ["/placeholder.svg?height=400&width=300", "/placeholder.svg?height=400&width=300"],
+      avatar: "/memories/lady3.jpeg",
+      photos: ["/memories/lady3.jpeg"],
     },
   ]
 
@@ -222,7 +226,7 @@ export default function HomePage() {
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-300 ${darkMode ? "dark bg-gray-900" : "bg-gradient-to-br from-purple-50 to-orange-50"}`}
+      className={`min-h-screen transition-colors duration-300 ${darkMode ? "dark bg-gray-900" : "bg-white"}`}
     >
       <Header
         darkMode={darkMode}
@@ -236,46 +240,80 @@ export default function HomePage() {
       <VoiceNavigation enabled={voiceEnabled} language={language} />
 
       <main className="container mx-auto px-4 py-8">
-        {/* Hero Section with Background Logo */}
+        {/* Hero Section with Background Logo and Glow */}
         <section className="relative text-center py-16 md:py-24 overflow-hidden">
-          {/* Background SilverCircle Logo */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          {/* Heart-shaped background images */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+            <div className="relative w-[340px] h-[320px] md:w-[420px] md:h-[400px]">
+              <Image
+                src="/dadi.jpeg"
+                alt="Dadi"
+                width={200}
+                height={200}
+                className="absolute left-[10%] top-[20%] md:left-[5%] md:top-[15%] rounded-full shadow-xl opacity-70 rotate-[-25deg] border-4 border-white"
+                style={{ zIndex: 1 }}
+              />
+              <Image
+                src="/dadu.jpeg"
+                alt="Dadu"
+                width={200}
+                height={200}
+                className="absolute right-[10%] top-[20%] md:right-[5%] md:top-[15%] rounded-full shadow-xl opacity-70 rotate-[25deg] border-4 border-white"
+                style={{ zIndex: 1 }}
+              />
+            </div>
+          </div>
+          {/* Animated Glowing Gradient Background */}
+          <div className="glow-bg" />
+          {/* Background SilverCircle Logo with Glow */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
             <Image
               src="/logo.png"
               alt="SilverCircle Background"
               width={400}
               height={400}
-              className="opacity-10 dark:opacity-5"
+              className="opacity-10 dark:opacity-5 glow-logo"
             />
           </div>
-
           {/* Main Content */}
           <div className="relative z-10 max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-purple-600 via-purple-700 to-orange-600 bg-clip-text text-transparent font-extrabold">
-                Where silver meets soul,
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-orange-500 via-purple-600 to-purple-700 bg-clip-text text-transparent font-extrabold">
-                connection comes alive.
+            <h1
+              className="text-4xl md:text-6xl font-bold mb-6 leading-tight tracking-tight italic"
+              style={{ fontFamily: '"DM Serif Display", serif' }}
+            >
+              <span className="inline-block w-full min-h-[2.5em] text-purple-700 font-extrabold animate-pulse" style={{ textShadow: '0 2px 8px #a78bfa, 0 1px 2px #fbbf24' }}>
+                <Typewriter
+                  words={["Where silver meets soul,", "Where connection feels alive.", "Where every story shines."]}
+                  loop={0}
+                  cursor
+                  cursorStyle="_"
+                  typeSpeed={60}
+                  deleteSpeed={40}
+                  delaySpeed={2000}
+                />
               </span>
             </h1>
-            <p className="text-xl md:text-2xl mb-12 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            <p
+              className="text-xl md:text-2xl mb-12 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed animate-fade-in tracking-wide"
+              style={{ fontFamily: 'Poppins, Arial, Helvetica, sans-serif' }}
+            >
               {t.subtitle}
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Button
                 size="lg"
-                className="text-lg px-8 py-4 bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
+                className="text-lg px-8 py-4 bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white rounded-full shadow-lg transform transition-all duration-200 glow-btn tracking-wide"
                 asChild
+                style={{ fontFamily: 'Poppins, Arial, Helvetica, sans-serif' }}
               >
                 <Link href="/profile">{t.joinCommunity}</Link>
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="text-lg px-8 py-4 border-2 border-purple-600 text-purple-600 hover:bg-purple-50 dark:hover:bg-purple-900 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
+                className="text-lg px-8 py-4 border-2 border-purple-600 text-purple-600 hover:bg-purple-50 dark:hover:bg-purple-900 rounded-full shadow-lg transform transition-all duration-200 glow-btn tracking-wide"
                 asChild
+                style={{ fontFamily: 'Poppins, Arial, Helvetica, sans-serif' }}
               >
                 <Link href="/about">{t.learnMore}</Link>
               </Button>
@@ -496,6 +534,41 @@ export default function HomePage() {
       </main>
 
       <RatingModal isOpen={showRatingModal} onClose={() => setShowRatingModal(false)} language={language} />
+
+      {/* Add custom styles for animated glow */}
+      <style jsx global>{`
+        .glow-bg {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 600px;
+          height: 600px;
+          transform: translate(-50%, -50%);
+          background: conic-gradient(from 180deg at 50% 50%, #a78bfa 0%, #fbbf24 25%, #f472b6 50%, #a78bfa 75%, #fbbf24 100%);
+          filter: blur(80px) brightness(1.2);
+          opacity: 0.7;
+          z-index: 1;
+          animation: spin 8s linear infinite;
+          border-radius: 50%;
+          pointer-events: none;
+        }
+        @keyframes spin {
+          0% { transform: translate(-50%, -50%) rotate(0deg); }
+          100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        .glow-logo {
+          box-shadow: 0 0 60px 10px #a78bfa, 0 0 120px 40px #fbbf24;
+          transition: box-shadow 0.4s;
+        }
+        .glow-btn {
+          box-shadow: 0 0 24px 4px #a78bfa88, 0 0 48px 8px #fbbf2488;
+          transition: box-shadow 0.3s, transform 0.2s;
+        }
+        .glow-btn:hover {
+          box-shadow: 0 0 48px 12px #a78bfa, 0 0 96px 24px #fbbf24;
+          transform: scale(1.07);
+        }
+      `}</style>
     </div>
   )
 }
