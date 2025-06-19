@@ -13,6 +13,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { User, Mail, Phone, MapPin, Heart, Shield } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 export default function ProfilePage() {
   const [darkMode, setDarkMode] = useState(false)
@@ -29,6 +30,10 @@ export default function ProfilePage() {
     bio: "",
     isVolunteer: false,
   })
+
+  const router = useRouter()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
 
   useEffect(() => {
     if (darkMode) {
@@ -60,6 +65,11 @@ export default function ProfilePage() {
       switchToLogin: "Already have an account? Sign in",
       privacy: "Your privacy and security are our top priority",
       verified: "All profiles are verified for your safety",
+      signingIn: "Signing In...",
+      creatingAccount: "Creating Account...",
+      welcomeBack: "Welcome Back!",
+      accountCreated: "Account Created!",
+      redirecting: "Redirecting to home...",
     },
     hi: {
       welcome: "सिल्वरसर्कल में आपका स्वागत है",
@@ -82,15 +92,31 @@ export default function ProfilePage() {
       switchToLogin: "पहले से खाता है? साइन इन करें",
       privacy: "आपकी गोपनीयता और सुरक्षा हमारी सर्वोच्च प्राथमिकता है",
       verified: "आपकी सुरक्षा के लिए सभी प्रोफाइल सत्यापित हैं",
+      signingIn: "साइन इन हो रहे हैं...",
+      creatingAccount: "खाता बनाया जा रहा है...",
+      welcomeBack: "वापस आपका स्वागत है!",
+      accountCreated: "खाता बनाया गया!",
+      redirecting: "होम पर भेजा जा रहा है...",
     },
   }
 
   const t = translations[language as keyof typeof translations]
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
+    setIsSubmitting(true)
+
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
     console.log("Form submitted:", formData)
+    setSubmitSuccess(true)
+    setIsSubmitting(false)
+
+    // Redirect after success
+    setTimeout(() => {
+      router.push("/")
+    }, 1500)
   }
 
   const handleInputChange = (field: string, value: string | boolean) => {
@@ -285,9 +311,24 @@ export default function ProfilePage() {
 
                 <Button
                   type="submit"
-                  className="w-full text-lg py-4 bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200"
+                  disabled={isSubmitting}
+                  className="w-full text-lg py-4 bg-gradient-to-r from-purple-600 to-orange-500 hover:from-purple-700 hover:to-orange-600 text-white rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:transform-none"
                 >
-                  {isLogin ? t.login : t.signup}
+                  {isSubmitting ? (
+                    <div className="flex items-center justify-center">
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                      {isLogin ? t.signingIn : t.creatingAccount}
+                    </div>
+                  ) : submitSuccess ? (
+                    <div className="flex items-center justify-center">
+                      <span className="mr-2">✓</span>
+                      {isLogin ? t.welcomeBack : t.accountCreated}
+                    </div>
+                  ) : isLogin ? (
+                    t.login
+                  ) : (
+                    t.signup
+                  )}
                 </Button>
 
                 <div className="text-center">
@@ -300,6 +341,12 @@ export default function ProfilePage() {
                   </button>
                 </div>
               </form>
+              {submitSuccess && (
+                <div className="text-center mt-4 p-4 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-xl">
+                  <p className="font-semibold">{isLogin ? t.welcomeBack : t.accountCreated}</p>
+                  <p className="text-sm mt-1">{t.redirecting}</p>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
