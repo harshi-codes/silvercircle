@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Heart, Users, Eye, Gamepad2, UserCheck, ChevronLeft, ChevronRight, X, HandHeart } from "lucide-react"
+import { Heart, Users, Eye, Gamepad2, UserCheck, ChevronLeft, ChevronRight, X } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { Header } from "@/components/header"
@@ -87,10 +87,6 @@ export default function HomePage() {
       hobbyDesc: "Connect with others who share your passions and interests",
       vrMemories: "Immersive VR Memory Lane",
       vrDesc: "Experience nostalgic moments through virtual reality",
-      companions: "Go Companions Connect",
-      companionsDesc: "Find trusted companions for activities and adventures",
-      goodCompanion: "Good Companion Helper",
-      goodCompanionDesc: "Connect with nearby seniors for mutual help and support",
       brainGames: "Brain Games & Puzzles",
       brainGamesDesc: "Exercise your mind and earn coins for premium features",
       safeConnections: "Safe & Verified Connections",
@@ -117,10 +113,6 @@ export default function HomePage() {
       hobbyDesc: "अपने जुनून साझा करने वाले लोगों से जुड़ें",
       vrMemories: "वर्चुअल रियलिटी मेमोरी लेन",
       vrDesc: "वर्चुअल रियलिटी के माध्यम से यादों का अनुभव करें",
-      companions: "साथी कनेक्ट",
-      companionsDesc: "गतिविधियों के लिए विश्वसनीय साथी खोजें",
-      goodCompanion: "अच्छे साथी सहायक",
-      goodCompanionDesc: "पारस्परिक सहायता के लिए आस-पास के वरिष्ठ नागरिकों से जुड़ें",
       brainGames: "दिमागी खेल और पहेलियां",
       brainGamesDesc: "अपने दिमाग का व्यायाम करें और प्रीमियम सुविधाओं के लिए सिक्के कमाएं",
       safeConnections: "सुरक्षित और सत्यापित कनेक्शन",
@@ -459,26 +451,6 @@ export default function HomePage() {
                   <Eye className="w-12 h-12 text-blue-600 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
                   <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">{t.vrMemories}</h3>
                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{t.vrDesc}</p>
-                </CardContent>
-              </Card>
-            </Link>
-
-            <Link href="/companions">
-              <Card className="bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-2xl border-0 cursor-pointer group">
-                <CardContent className="p-8 text-center">
-                  <Users className="w-12 h-12 text-green-600 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
-                  <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">{t.companions}</h3>
-                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{t.companionsDesc}</p>
-                </CardContent>
-              </Card>
-            </Link>
-
-            <Link href="/companions">
-              <Card className="bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-2xl border-0 cursor-pointer group">
-                <CardContent className="p-8 text-center">
-                  <HandHeart className="w-12 h-12 text-rose-600 mx-auto mb-4 group-hover:scale-110 transition-transform duration-200" />
-                  <h3 className="text-xl font-bold mb-3 text-gray-800 dark:text-white">{t.goodCompanion}</h3>
-                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{t.goodCompanionDesc}</p>
                 </CardContent>
               </Card>
             </Link>

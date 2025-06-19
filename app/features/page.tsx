@@ -34,8 +34,6 @@ export default function FeaturesPage() {
       vrMemories: "Immersive VR Memory Lane",
       vrDesc:
         "Experience virtual tours of historical places, revisit old neighborhoods, and explore memories in stunning detail.",
-      companions: "Go Companions Connect",
-      companionsDesc: "Find trusted companions for activities, outings, and adventures. Never feel alone again.",
       videoChat: "Simple Video Calling",
       videoChatDesc:
         "Easy-to-use video calls with large buttons and clear audio. Stay connected with family and friends.",
@@ -57,8 +55,6 @@ export default function FeaturesPage() {
       hobbyDesc: "बागवानी, खाना पकाने, पढ़ने, शिल्प और अन्य के लिए मंडलों में शामिल हों।",
       vrMemories: "वर्चुअल रियलिटी मेमोरी लेन",
       vrDesc: "ऐतिहासिक स्थानों के वर्चुअल टूर का अनुभव करें, पुराने पड़ोस को फिर से देखें।",
-      companions: "साथी कनेक्ट",
-      companionsDesc: "गतिविधियों, सैर और रोमांच के लिए विश्वसनीय साथी खोजें।",
       videoChat: "सरल वीडियो कॉलिंग",
       videoChatDesc: "बड़े बटन और स्पष्ट ऑडियो के साथ उपयोग में आसान वीडियो कॉल।",
       safeSpace: "सुरक्षित वातावरण",
@@ -94,13 +90,6 @@ export default function FeaturesPage() {
       description: t.vrDesc,
       color: "text-blue-600",
       href: "/vr-memories",
-    },
-    {
-      icon: Users,
-      title: t.companions,
-      description: t.companionsDesc,
-      color: "text-green-600",
-      href: "/companions",
     },
     {
       icon: Camera,
