@@ -1,30 +1,50 @@
-# Silvercircle website design
+# 🌸 SilverCircle
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
+**A social networking platform crafted for senior citizens – rekindling memories, sharing hobbies, and building digital companionship.**
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/harshita-singhs-projects-6408b6a1/v0-silvercircle-website-design)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/BHpPWj6eMYp)
+[🌐 Visit Live Website](https://silver-circle.vercel.app/about) | [📁 View Codebase](https://github.com/harshi-codes/silvercircle)
 
-## Overview
+---
 
-This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+## ✨ About the Project
 
-## Deployment
+**SilverCircle** is a warm, inclusive digital space designed to promote social connection and emotional well-being among older adults. With hobby circles, memory walls, wellness content, and intergenerational features, the platform makes tech feel simple, beautiful, and meaningful for seniors.
 
-Your project is live at:
+We blend user-friendly UI with purposeful design, focusing on accessibility, ease of use, and gentle aesthetics using calm pastel themes.
 
-**[https://vercel.com/harshita-singhs-projects-6408b6a1/v0-silvercircle-website-design](https://vercel.com/harshita-singhs-projects-6408b6a1/v0-silvercircle-website-design)**
+---
 
-## Build your app
+## 💡 Key Features
 
-Continue building your app on:
+- 🧓 **Hobby Circles** – Join or explore groups based on interests like art, music, gardening, and more.
+- 🖼️ **Memory Wall** – Share nostalgic photos, moments, and life stories with your circle.
+- 💬 **Social Interaction** – Comment, like, and engage with peers through simplified buttons.
+- 🧘 **Wellness & Recipes** – Curated content for mental, physical, and emotional well-being.
+- 🔄 **Horizontal Scroll Cards** – Easy content discovery via horizontal sliders grouped by themes.
+- 💻 **Responsive UI** – Tailored for desktops and tablets, with scalable fonts and CTA buttons.
 
-**[https://v0.dev/chat/projects/BHpPWj6eMYp](https://v0.dev/chat/projects/BHpPWj6eMYp)**
+---
 
-## How It Works
+## 🛠️ Tech Stack
 
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+| Frontend | Styling | Deployment |
+|----------|---------|------------|
+| React.js | Tailwind CSS | Vercel |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or above)
+- npm or yarn
+
+### Installation
+
+```bash
+git clone https://github.com/harshi-codes/silvercircle.git
+cd silvercircle
+npm install
+npm start
+
